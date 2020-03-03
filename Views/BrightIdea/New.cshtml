@@ -1,0 +1,16 @@
+@model BrightIdea
+
+<h1>Post something witty here...</h1>
+
+<form asp-controller="BrightIdea" asp-action="Create">
+
+  <div class="form-group">
+    <label asp-for="Content">
+      Content
+    </label>
+    <span class="text-danger font-weight-bold" asp-validation-for="Content"></span>
+    <input class="form-control" asp-for="Content">
+  </div>
+  <button class="btn btn-info" type="submit">Submit</button>
+
+</form>

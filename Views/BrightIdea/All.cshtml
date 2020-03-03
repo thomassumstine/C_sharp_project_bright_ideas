@@ -1,0 +1,75 @@
+@model List<BrightIdea>;
+
+
+<a asp-action="logout" asp-controller="Home">LOGOUT</a>
+
+<h5 class="text-center">
+  <a href="new">Post something witty here...</a>
+</h5>
+
+<h1 class="text-center">
+  All Bright Ideas
+</h1>
+
+@foreach (BrightIdea currentBrightIdea in Model)
+{
+<div class="card mx-auto text-center mb-3" style="width: 25rem;">
+  <div class="card-header">
+    <h5 class="card-title">
+      <a asp-action="AliasDetails" asp-controller="BrightIdea" asp-route-idforaliasdetails="@currentBrightIdea.BrightIdeaId">@currentBrightIdea.Author.FullName()</a> says:
+    </h5>
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+      @currentBrightIdea.Content
+    </p>
+  </div>
+  <div class="card-footer">
+    @if (ViewBag.Uid == @currentBrightIdea.Author.UserId) {
+      <a asp-controller="BrightIdea" asp-action="Delete" asp-route-id="@currentBrightIdea.BrightIdeaId" class="btn btn-danger">
+        Delete
+      </a>
+    }
+    @{
+      Like currentLike = currentBrightIdea.Likes.FirstOrDefault(like => like.UserId == ViewBag.Uid);
+
+      string upArrowClass = "text-muted";
+      string downArrowClass = "text-muted";
+
+
+      if (currentLike != null)
+      {
+        if (currentLike.IsLike)
+        {
+          upArrowClass = "text-success";
+        }
+        else
+        {
+          downArrowClass = "text-danger";
+        }
+      }
+    }
+    <a
+      asp-controller="BrightIdea"
+      asp-action="Like"
+      asp-route-postId="@currentBrightIdea.BrightIdeaId"
+      asp-route-isLike="true"
+      class="h1 @upArrowClass"
+      style="text-decoration: none;"
+      >
+      &uarr;
+    </a>
+    <a
+      asp-controller="BrightIdea"
+      asp-action="Like"
+      asp-route-postId="@currentBrightIdea.BrightIdeaId"
+      asp-route-isLike="false"
+      class="h1 @downArrowClass"
+      style="text-decoration: none;"
+      >
+      &darr;
+    </a>
+    <a asp-action="LikersDetails" asp-controller="BrightIdea" asp-route-idforlikersdetails="@currentBrightIdea.BrightIdeaId.">@currentBrightIdea.Likes.Count people</a> like this.
+  </div>
+</div>
+}

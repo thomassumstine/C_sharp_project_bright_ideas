@@ -1,0 +1,27 @@
+@model BrightIdea
+
+<div class="card mx-auto text-center mb-3" style="width: 25rem;">
+  <div class="card-header">
+    <h5 class="card-title">
+        @Model.Author.FullName()
+    </h5>
+    <h5 class="card-title">
+        @Model.Author.Alias
+    </h5>
+    <h5 class="card-title">
+        @Model.Author.Email
+    </h5>
+  </div>
+<div class="card-footer">
+
+    <a asp-controller="BrightIdea" asp-action="All" class="btn btn-info">
+      Back
+    </a>
+
+    @if (ViewBag.Uid == Model.Author.UserId) {
+      <a asp-controller="BrightIdea" asp-action="Delete" asp-route-id="@Model.BrightIdeaId" class="btn btn-danger">
+        Delete
+      </a>
+    }
+</div>
+</div>
